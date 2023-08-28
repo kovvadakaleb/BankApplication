@@ -57,11 +57,14 @@ public class SBIAccount implements BankAccount{
     }
 
     public void setBalance(double balance) {
-        if (balance > -1) {
+        if (balance > 999) {
             this.Balance = balance;
         }
-        else{
+        else if(balance<0){
             System.out.println("Balance should not be negative");
+        }
+        else{
+            System.out.println("Alert!!! -> Account Minimum balance should be 1000");
         }
     }
     public String getIFSC() {
@@ -96,16 +99,18 @@ public class SBIAccount implements BankAccount{
     @Override
     public String withdraw(double amount, String Password) {
        if(this.Password.equals(Password)) {
-           if (amount > this.Balance) {
-               return "InSufficient Funds -> Your balance : " + this.Balance;
-           }
-           else if (amount < 0) {
+
+           if (amount < 0) {
                return "Amount not be negative";
            }
-
+           else if (amount > this.Balance) {
+               return "InSufficient Funds -> Your balance : " + this.Balance;
+           }
+           else if(amount<=(this.Balance-1000)) {
                this.Balance -= amount;
                return "Amount Deducted Successfully -> Your balance : " + this.Balance;
-
+           }
+           return "SBI_BANK Rule : You cannot Withdraw money from minimum balance in your account";
        }
        else {
            return "Invalid Password";
