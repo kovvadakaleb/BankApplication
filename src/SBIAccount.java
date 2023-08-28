@@ -16,8 +16,8 @@ public class SBIAccount implements BankAccount{
 
     public SBIAccount(String name, String password, double balance) {
         Name = name;
-        this.Password = password;
-        this.Balance = balance;
+        setPassword(password);
+        setBalance(balance);
         this.Account = String.valueOf(UUID.randomUUID());
     }
 
@@ -45,17 +45,25 @@ public class SBIAccount implements BankAccount{
     }
 
     public void setPassword(String password) {
-        this.Password = password;
+        if (password.length() > 7) {
+            this.Password = password;
+        }
+        else{
+            System.out.println("Password should be minimum 8 Characters");
+        }
     }
-
     public double getBalance() {
         return Balance;
     }
 
     public void setBalance(double balance) {
-        this.Balance = balance;
+        if (balance > -1) {
+            this.Balance = balance;
+        }
+        else{
+            System.out.println("Balance should not be negative");
+        }
     }
-
     public String getIFSC() {
         return IFSC;
     }
@@ -76,18 +84,28 @@ public class SBIAccount implements BankAccount{
 
     @Override
     public String addmoney(double amount) {
-         this.Balance += amount;
-         return "Your amount added -> Your balance is : "+this.Balance;
+        if (amount > 0) {
+            this.Balance += amount;
+            return "Your amount added -> Your balance is : " + this.Balance;
+        }
+        else{
+            return "Amount not be negative";
+        }
     }
 
     @Override
     public String withdraw(double amount, String Password) {
-       if(this.Password.equals(Password)){
-           if(amount>this.Balance){
-               return "InSufficient Funds -> Your balance : "+this.Balance;
+       if(this.Password.equals(Password)) {
+           if (amount > this.Balance) {
+               return "InSufficient Funds -> Your balance : " + this.Balance;
            }
-           this.Balance -= amount;
-           return "Amount Deducted Successfully -> Your balance : "+this.Balance;
+           else if (amount < 0) {
+               return "Amount not be negative";
+           }
+
+               this.Balance -= amount;
+               return "Amount Deducted Successfully -> Your balance : " + this.Balance;
+
        }
        else {
            return "Invalid Password";
@@ -97,8 +115,13 @@ public class SBIAccount implements BankAccount{
     @Override
     public String changepassword(String oldpassword, String newpassword) {
         if(this.Password.equals(oldpassword)){
-            this.Password = newpassword;
-            return "Your Password Updated SuccessFully";
+            if(!newpassword.equals(oldpassword)) {
+                this.Password = newpassword;
+                return "Your Password Updated SuccessFully";
+            }
+            else{
+                return "Your oldpassword and newpassword not be same!!!";
+            }
         }
         else{
             return "The Password You Entered Doesn't Match with Oldpassword ";
@@ -107,7 +130,12 @@ public class SBIAccount implements BankAccount{
 
     @Override
     public String calculateinterest(double year) {
-        double totalinterest  = (this.Balance*year*Interest)/100.0;
-        return "Your Interet for 5 years : "+totalinterest;
+        if(year>0) {
+            double totalinterest = (this.Balance * year * Interest) / 100.0;
+            return "Your Interet for given years : " + totalinterest;
+        }
+        else{
+            return "year not be negative";
+        }
     }
 }
