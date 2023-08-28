@@ -11,11 +11,11 @@ public class Main {
           System.out.println(obj2.getBalance());
 
           System.out.println(obj2.withdraw(jesus.nextDouble(), jesus.next()));
-  //      System.out.println(obj2.addmoney(1000.0));
-//         System.out.println(obj2.changepassword("Bujji@123","Bujji@123"));
-//         System.out.println(obj2.changepassword("Bujji@123","Bujji@453"));
-//         System.out.println(obj2.calculateinterest(-1));
-//         System.out.println(obj2.calculateinterest(0.5));
+          System.out.println(obj2.addmoney(1000.0));
+          System.out.println(obj2.changepassword("Bujji@123","Bujji@123"));
+          System.out.println(obj2.changepassword("Bujji@123","Bujji@453"));
+          System.out.println(obj2.calculateinterest(-1));
+          System.out.println(obj2.calculateinterest(0.5));
 
         }
     }
